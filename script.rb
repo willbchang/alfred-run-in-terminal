@@ -12,20 +12,27 @@ runtime_environments = {
   rs: 'rust'
 }
 
-# Remove single quote around file path when selecting from Alfred File Browser
-filepath = /^'.*'$/.match?(query) ? query[1..-2] : query
-
-if File.directory?(filepath)
-  command = "cd #{filepath}"
-elsif File.file?(filepath)
-  file_extension = File.extname(filepath)[1..-1]
-  command = "#{runtime_environments[file_extension.to_sym]} #{filepath}"
-elsif query.empty?
-  return `open -a #{terminal}`
-else
+def get_command(query, runtime_environments)
+  # Remove single quote around file path when selecting from Alfred File Browser
+  filepath = /^'.*'/.match?(query) ? query[1..-2] : query
   # Remove `$ ` in the beginning of the command, usually in stackoverflow.com or github.com
-  command = /^\$\s.*/.match?(query) ? query[2..-1] : query
+  command = /^\\s.*/.match?(query) ? query[2..-1] : query
+
+  if File.directory?(filepath)
+    "cd #{filepath}"
+  elsif File.file?(filepath)
+    # Get file extension from file path, without prefix dot, and convert it to a hash key
+    file_extension = File.extname(filepath)[1..-1].to_sym
+    "#{runtime_environments[file_extension]} #{filepath}"
+  else
+    command
+  end
 end
 
 # https://stackoverflow.com/a/14949613/9984029
-`osascript -e 'tell app "#{terminal}" to do script "#{command}" activate'`
+if query.empty?
+  `open -a #{terminal}`
+else
+  `osascript -e 'tell app "#{terminal}" to do script "#{get_command(query, runtime_environments)}" activate'`
+end
+
