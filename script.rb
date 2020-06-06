@@ -22,18 +22,21 @@ def get_file_extension(filepath)
   File.extname(filepath)[1..-1].to_sym if File.file?(filepath)
 end
 
+def get_command(query)
+  # Remove `$ ` in the beginning of the command, usually in stackoverflow.com or github.com
+  /^\\s.*/.match?(query) ? query[2..-1] : query
+end
+
 def get_script(query, runtimes)
   filepath = get_filepath(query)
   file_extension = get_file_extension(filepath)
-  # Remove `$ ` in the beginning of the command, usually in stackoverflow.com or github.com
-  command = /^\\s.*/.match?(query) ? query[2..-1] : query
 
   if File.directory?(filepath)
     "cd #{filepath}"
   elsif File.file?(filepath)
     "#{runtimes[file_extension]} #{filepath}"
   else
-    command
+    get_command(query)
   end
 end
 
