@@ -22,7 +22,7 @@ def get_file_extension(filepath)
   File.extname(filepath)[1..-1].to_sym if File.file?(filepath)
 end
 
-def get_command(query, runtimes)
+def get_script(query, runtimes)
   filepath = get_filepath(query)
   file_extension = get_file_extension(filepath)
   # Remove `$ ` in the beginning of the command, usually in stackoverflow.com or github.com
@@ -41,6 +41,6 @@ end
 if query.empty?
   `open -a #{terminal}`
 else
-  `osascript -e 'tell app "#{terminal}" to do script "#{get_command(query, runtimes)}" activate'`
+  `osascript -e 'tell app "#{terminal}" to do script "#{get_script(query, runtimes)}" activate'`
 end
 
