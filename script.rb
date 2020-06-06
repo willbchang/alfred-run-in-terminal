@@ -1,8 +1,5 @@
-require 'shellwords'
-
-
 query = ARGV[0]
-terminal = ARGV[1].shellescape
+terminal = ARGV[1]
 
 # Remove single quote around file path when selecting from Alfred File Browser
 filepath = /^'.*'$/.match?(query) ? query[1..-2] : query
