@@ -1,8 +1,6 @@
 query = ARGV[0]
 terminal = ARGV[1]
 
-# Remove single quote around file path when selecting from Alfred File Browser
-filepath = /^'.*'$/.match?(query) ? query[1..-2] : query
 
 # Executable programming languages' extension hash
 runtime_environments = {
@@ -16,6 +14,8 @@ runtime_environments = {
   rs: 'rust'
 }
 
+# Remove single quote around file path when selecting from Alfred File Browser
+filepath = /^'.*'$/.match?(query) ? query[1..-2] : query
 
 if File.directory?(filepath)
   command = "cd #{filepath}"
