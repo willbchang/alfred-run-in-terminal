@@ -12,9 +12,13 @@ runtimes = {
   rs: 'rust'
 }
 
-def get_command(query, runtimes)
+def get_filepath(query)
   # Remove single quote around file path when selecting from Alfred File Browser
-  filepath = /^'.*'/.match?(query) ? query[1..-2] : query
+  /^'.*'/.match?(query) ? query[1..-2] : query
+end
+
+def get_command(query, runtimes)
+  filepath = get_filepath(query)
   # Remove `$ ` in the beginning of the command, usually in stackoverflow.com or github.com
   command = /^\\s.*/.match?(query) ? query[2..-1] : query
 
