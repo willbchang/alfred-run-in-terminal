@@ -1,8 +1,6 @@
 query = ARGV[0]
 terminal = ARGV[1]
 
-
-# Executable programming languages' extension hash
 runtime_environments = {
   rb: 'ruby',
   sh: 'sh',
