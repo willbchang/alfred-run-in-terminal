@@ -17,16 +17,20 @@ def get_filepath(query)
   /^'.*'/.match?(query) ? query[1..-2] : query
 end
 
+def get_file_extension(filepath)
+  # Get file extension from file path, without prefix dot, and convert it to a hash key
+  File.extname(filepath)[1..-1].to_sym if File.file?(filepath)
+end
+
 def get_command(query, runtimes)
   filepath = get_filepath(query)
+  file_extension = get_file_extension(filepath)
   # Remove `$ ` in the beginning of the command, usually in stackoverflow.com or github.com
   command = /^\\s.*/.match?(query) ? query[2..-1] : query
 
   if File.directory?(filepath)
     "cd #{filepath}"
   elsif File.file?(filepath)
-    # Get file extension from file path, without prefix dot, and convert it to a hash key
-    file_extension = File.extname(filepath)[1..-1].to_sym
     "#{runtimes[file_extension]} #{filepath}"
   else
     command
