@@ -20,6 +20,8 @@ if File.directory?(filepath)
 elsif File.file?(filepath)
   file_extension = File.extname(filepath)[1..-1]
   command = "#{runtime_environments[file_extension.to_sym]} #{filepath}"
+elsif query.empty?
+  return `open -a #{terminal}`
 else
   # Remove `$ ` in the beginning of the command, usually in stackoverflow.com or github.com
   command = /^\$\s.*/.match?(query) ? query[2..-1] : query
