@@ -1,7 +1,7 @@
 query = ARGV[0]
 terminal = ARGV[1]
 
-runtime_environments = {
+runtimes = {
   rb: 'ruby',
   sh: 'sh',
   py: 'python',
@@ -12,7 +12,7 @@ runtime_environments = {
   rs: 'rust'
 }
 
-def get_command(query, runtime_environments)
+def get_command(query, runtimes)
   # Remove single quote around file path when selecting from Alfred File Browser
   filepath = /^'.*'/.match?(query) ? query[1..-2] : query
   # Remove `$ ` in the beginning of the command, usually in stackoverflow.com or github.com
@@ -23,7 +23,7 @@ def get_command(query, runtime_environments)
   elsif File.file?(filepath)
     # Get file extension from file path, without prefix dot, and convert it to a hash key
     file_extension = File.extname(filepath)[1..-1].to_sym
-    "#{runtime_environments[file_extension]} #{filepath}"
+    "#{runtimes[file_extension]} #{filepath}"
   else
     command
   end
@@ -33,6 +33,6 @@ end
 if query.empty?
   `open -a #{terminal}`
 else
-  `osascript -e 'tell app "#{terminal}" to do script "#{get_command(query, runtime_environments)}" activate'`
+  `osascript -e 'tell app "#{terminal}" to do script "#{get_command(query, runtimes)}" activate'`
 end
 
