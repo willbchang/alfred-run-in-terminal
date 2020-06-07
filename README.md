@@ -17,6 +17,9 @@ An Alfred Workflow to **execute selected file**, **cd to selected folder**, and 
 - Launch Terminal if Terminal isn't active.
 - Bring Terminal to the front window if Terminal is active.
 - Run selected text in Terminal, it avoids `$ ` in the beginning of the first line.
+  ```bash
+  $ echo select me and press hotkey!
+  ```
 - Open selected file/folder from Finder or Alfred File Browser.
   1. **Enable Quick Search Mode** in `Features -> File Action`.
   2. Launch Alfred and press <kbd>spacebar</kbd> or input a single quote.
@@ -29,6 +32,24 @@ An Alfred Workflow to **execute selected file**, **cd to selected folder**, and 
 1. Open **Alfred Preferences** -> **Workflows**  -> **Open in Terminal**.
 2. Double click `Run Script`, replace `Terminal` with `YOUR TERMINAL APP`.
 3. Make sure the app name surrounds with **double quote** `""`.
+
+### Add Runtimes
+1. Open **Alfred Preferences** -> **Workflows**  -> **Open in Terminal**.
+2. Right click `Open in Editor` workflow -> Open in Finder
+3. Open `script.rb`, press <kbd>Command</kbd> + <kbd>F</kbd> to find `runtimes`.
+   ```ruby
+   runtimes = {
+     rb: 'ruby',
+     sh: 'sh',
+     py: 'python',
+     go: 'go',
+     php: 'php',
+     js: 'deno',
+     ts: 'deno',
+     rs: 'rust'
+   }
+   ```
+4. Add new `FILETYPE: RUNTIME`.
 
 ## Contribution
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
