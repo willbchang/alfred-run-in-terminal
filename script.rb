@@ -10,7 +10,7 @@ end
 
 def get_command(query)
   # Remove `$ ` in the beginning of the command, usually in stackoverflow.com or github.com
-  /^\\s.*/.match?(query) ? query[2..-1] : query
+  /^\$\s.*/.match?(query) ? query[2..-1] : query
 end
 
 def get_script(query, runtimes)
