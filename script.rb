@@ -3,8 +3,8 @@ def get_filepath(query)
   /^'.*'/.match?(query) ? query[1..-2] : query
 end
 
-def get_file_extension(filepath)
-  # Get file extension from file path, without prefix dot, and convert it to a hash key
+def get_filetype(filepath)
+  # Get file type from file path, without prefix dot, and convert it to a hash key
   File.extname(filepath)[1..-1].to_sym if File.file?(filepath)
 end
 
@@ -15,12 +15,12 @@ end
 
 def get_script(query, runtimes)
   filepath = get_filepath(query)
-  file_extension = get_file_extension(filepath)
+  filetype = get_filetype(filepath)
 
   if File.directory?(filepath)
     "cd #{filepath}"
   elsif File.file?(filepath)
-    "#{runtimes[file_extension]} #{filepath}"
+    "#{runtimes[filetype]} #{filepath}"
   else
     get_command(query)
   end
