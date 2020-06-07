@@ -1,17 +1,3 @@
-query = ARGV[0]
-terminal = ARGV[1]
-
-runtimes = {
-  rb: 'ruby',
-  sh: 'sh',
-  py: 'python',
-  go: 'go',
-  php: 'php',
-  js: 'deno',
-  ts: 'deno',
-  rs: 'rust'
-}
-
 def get_filepath(query)
   # Remove single quote around file path when selecting from Alfred File Browser
   /^'.*'/.match?(query) ? query[1..-2] : query
@@ -40,7 +26,19 @@ def get_script(query, runtimes)
   end
 end
 
-# https://stackoverflow.com/a/14949613/9984029
+query = ARGV[0]
+terminal = ARGV[1]
+runtimes = {
+  rb: 'ruby',
+  sh: 'sh',
+  py: 'python',
+  go: 'go',
+  php: 'php',
+  js: 'deno',
+  ts: 'deno',
+  rs: 'rust'
+}
+
 if query.empty?
   `open -a #{terminal}`
 else
