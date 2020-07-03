@@ -19,6 +19,8 @@ An Alfred Workflow to **execute selected file**, **cd to selected folder**, and 
 - Run selected text in Terminal, it avoids `$ ` in the beginning of the first line.
   ```bash
   $ echo select me and press hotkey!
+   $ echo Hello $(whoami)
+     $    echo Alfred Loves You!
   ```
 - Open selected file/folder from Finder or Alfred File Browser.
   1. **Enable Quick Search Mode** in `Features -> File Action`.
