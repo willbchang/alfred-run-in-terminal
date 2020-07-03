@@ -4,13 +4,17 @@ def get_filepath(query)
 end
 
 def get_filetype(filepath)
-  # Get file type from file path, without prefix dot, and convert it to a hash key
+  # Get file extension from file path, without prefix dot, and convert it to a hash key
   File.extname(filepath)[1..-1].to_sym if File.file?(filepath)
 end
 
-def get_command(query)
+def remove_dollar(text)
   # Remove `$ ` in the beginning of the command, usually in stackoverflow.com or github.com
-  /^\$\s.*/.match?(query) ? query[2..-1] : query
+  /^\$\s.*/.match?(text) ? text[2..-1] : text
+end
+
+def get_command(query)
+ query.lines.map{|line| remove_dollar(line)}.join
 end
 
 def get_script(query, runtimes)
