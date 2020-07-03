@@ -9,8 +9,14 @@ def get_filetype(filepath)
 end
 
 def remove_dollar(text)
-  # Remove `$ ` in the beginning of the command, usually in stackoverflow.com or github.com
-  /^\$\s.*/.match?(text) ? text[2..-1] : text
+  # Remove `$ ` or ` $ ` in the beginning of the command, usually in stackoverflow.com or github.com
+  if /^\$\s.*/.match?(text)
+    text[2..-1]
+  elsif /^\s?\$\s.*/.match?(text)
+    text[3..-1]
+  else
+    text
+  end
 end
 
 def get_command(query)
