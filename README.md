@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="logo.png" alt="Run in Terminal Logo" height="150px"><br>
+  <img src="images/icon.png" alt="Run in Terminal Logo" height="150px"><br>
   <sub>Dedicated to my girlfriend  😘  @YangYang </sub>
 </p>
 
@@ -7,13 +7,14 @@
 An Alfred Workflow to **execute selected file**, **cd to selected folder**, and **run selected text** in Terminal with one hotkey.
 
 ## Installation
-1. Download [Run in Termianl.alfredworkflow](https://github.com/willbchang/alfred-run-in-terminal/releases/latest).
+1. Download [Run in Termianl.alfredworkflow](https://github.com/willbchang/alfred-run-in-terminal/releases/download/V1.0.0/Run-in-Terminal.alfredworkflow).
 2. Double click `Run in Terminal.alfredworkflow` to install.
 3. Click `Import` Button.
 4. Double click `Hotkey` and set your shortcut.(I'm using <kbd>alt</kbd> + <kbd>t</kbd>).
 
 ## Usage
 <kbd>alt</kbd> + <kbd>t</kbd>
+![run in terminal](images/run-in-terminal.gif)
 - Launch Terminal if Terminal isn't active.
 - Bring Terminal to the front window if Terminal is active.
 - Run selected text in Terminal, it avoids `$ ` in the beginning of the first line.
