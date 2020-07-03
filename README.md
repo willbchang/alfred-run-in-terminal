@@ -23,7 +23,7 @@ An Alfred Workflow to **execute selected file**, **cd to selected folder**, and 
    $ echo Hello $(whoami)
      $    echo Alfred Loves You!
   ```
-- Open selected file/folder from Finder or Alfred File Browser.
+- `cd` selected file/folder from Finder or Alfred File Browser.
   1. **Enable Quick Search Mode** in `Features -> File Action`.
   2. Launch Alfred and press <kbd>spacebar</kbd> or input a single quote.
   3. Move the highlight block to the destination folder.
@@ -52,7 +52,7 @@ An Alfred Workflow to **execute selected file**, **cd to selected folder**, and 
      rs: 'rust'
    }
    ```
-4. Add new `FILETYPE: RUNTIME`.
+4. Add new `FILETYPE: RUNTIME`, you can also set other command for specific file type.
 
 ## Contribution
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
