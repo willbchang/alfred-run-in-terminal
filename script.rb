@@ -8,21 +8,6 @@ def get_filetype(filepath)
   File.extname(filepath)[1..-1].to_sym if File.file?(filepath)
 end
 
-def remove_dollar(text)
-  # Remove `$ ` or ` $ ` in the beginning of the command, usually in stackoverflow.com or github.com
-  if /^\$\s.*/.match?(text)
-    text[2..-1]
-  elsif /^\s?\$\s.*/.match?(text)
-    text[3..-1]
-  else
-    text
-  end
-end
-
-def get_command(query)
- query.lines.map{|line| remove_dollar(line)}.join
-end
-
 def get_script(query, runtimes)
   filepath = get_filepath(query)
   filetype = get_filetype(filepath)
@@ -32,7 +17,7 @@ def get_script(query, runtimes)
   elsif File.file?(filepath)
     "#{runtimes[filetype]} #{filepath}"
   else
-    get_command(query)
+     query.gsub(/^\s*\$\s*/, '')
   end
 end
 
