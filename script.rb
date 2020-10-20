@@ -13,15 +13,17 @@ end
 def get_script(query, runtimes)
   filepath = get_filepath(query)
   filetype = get_filetype(filepath)
+  # The \ in filepath has to be escaped third time so that it will actually work.
+  # The first time \\\\\\\\ is in ruby string,
+  # The second time \\\\ is in bash script,
+  # The third time \\ is in apple script,
+  # The fourth time \ is in Terminal app which will escape the special character(s).
+  escaped_filepath = filepath.shellescape.gsub('\\', '\\\\\\\\')
 
   if File.directory?(filepath)
-    # The \ in filepath has to be escaped third time so that it will actually work.
-    # The first time is in ruby string \\\\\\\\ becomes \\\\
-    # The second time is in apple script \\\\ becomes \\
-    # The third time is in Terminal app \\ becomes \ which will escape the special character(s).
-    "cd #{filepath.shellescape.gsub('\\', '\\\\\\\\')}"
+    "cd #{escaped_filepath}"
   elsif File.file?(filepath)
-    "#{runtimes[filetype]} #{filepath}"
+    "#{runtimes[filetype]} #{escaped_filepath}"
   else
     query.gsub(/^\s*\$\s*/, '')
   end
