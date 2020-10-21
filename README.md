@@ -38,7 +38,7 @@ An Alfred Workflow to **execute selected file**, **cd to selected folder**, and 
 
 ### Add Runtimes
 1. Open **Alfred Preferences** -> **Workflows**  -> **Open in Terminal**.
-2. Right click `Open in Editor` workflow -> Open in Finder
+2. Right click `Run in Terminal` workflow -> Open in Finder
 3. Open `script.rb`, press <kbd>Command</kbd> + <kbd>F</kbd> to find `runtimes`.
    ```ruby
    runtimes = {
