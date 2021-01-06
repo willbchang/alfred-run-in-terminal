@@ -37,7 +37,7 @@ runtimes = {
   py: 'python',
   go: 'go',
   php: 'php',
-  js: 'deno',
+  js: 'node',
   ts: 'deno',
   rs: 'rust'
 }
