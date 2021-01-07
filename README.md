@@ -47,7 +47,7 @@ An Alfred Workflow to **execute selected file**, **cd to selected folder**, and 
      py: 'python',
      go: 'go',
      php: 'php',
-     js: 'deno',
+     js: 'node',
      ts: 'deno',
      rs: 'rust'
    }
