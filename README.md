@@ -7,12 +7,12 @@
 An Alfred Workflow to **execute selected file**, **cd to selected folder**, and **run selected text** in Terminal with one hotkey.
 
 ## Installation
-1. Download [Run in Termianl.alfredworkflow](https://github.com/willbchang/alfred-run-in-terminal/releases/download/V1.0.0/Run-in-Terminal.alfredworkflow).
+1. Download [Run in Termianl.alfredworkflow](https://github.com/willbchang/alfred-run-in-terminal/releases/latest).
 2. Double click `Run in Terminal.alfredworkflow` to install.
 3. Click `Import` Button.
 4. Double click `Hotkey` and set your shortcut.(I'm using <kbd>alt</kbd> + <kbd>t</kbd>).
 
-## Usage
+## Feature & Usage
 <kbd>alt</kbd> + <kbd>t</kbd>
 ![run in terminal](images/run-in-terminal.gif)
 - Launch Terminal if Terminal isn't active.
