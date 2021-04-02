@@ -62,5 +62,5 @@ Icon made by https://www.flaticon.com/authors/kirill-kazachek <br>
 It was built with 💖 in [NeoVim](https://neovim.io/) & [RubyMine](https://www.jetbrains.com/ruby/).
 
 ## License
-[MIT](LICENSE)
+[AGPL-3.0](LICENSE)
 
