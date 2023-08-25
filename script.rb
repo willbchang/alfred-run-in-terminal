@@ -31,8 +31,6 @@ def get_script(query, runtimes)
   end
 end
 
-query = ARGV[0]
-terminal = ARGV[1]
 runtimes = {
   rb: 'ruby',
   sh: 'sh',
@@ -43,10 +41,30 @@ runtimes = {
   ts: 'deno',
   rs: 'rust'
 }
-
-if query.empty?
-  `open -a #{terminal}`
-else
-  `osascript -e 'tell app "#{terminal}" to do script "#{get_script(query, runtimes)}" activate'`
+# https://stackoverflow.com/a/41553295/5520270
+def get_default_shell
+  `dscl . -read /Users/$(whoami) UserShell | sed 's/UserShell: \\\/.*\\\///'`
 end
+
+`
+osascript <<EOF
+-- Get the title of the Terminal window
+-- Please enable the Active process name
+-- Settings → Profiles → Window → Active process name
+tell application "Terminal"
+	activate
+	set frontWindow to front window
+	set windowTitle to name of frontWindow
+
+ 	-- Create a new tab if the window title does not end with shell name or login, which means it has active process.
+	if not (windowTitle ends with "-#{get_default_shell}" or windowTitle ends with "login") then
+		tell application "System Events" to keystroke "t" using command down
+	end if
+
+	-- Select current tab and run shell script
+	set theTab to selected tab in first window
+	do script "#{get_script(ARGV[0], runtimes)}" in theTab
+end tell
+EOF
+`
 
