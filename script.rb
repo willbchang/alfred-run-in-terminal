@@ -25,7 +25,7 @@ def get_script(query, runtimes)
   elsif File.file?(filepath)
     "#{runtimes[filetype]} #{escaped_filepath}"
   else
-    query.gsub(/^\s*\$\s*/, '')
+    query.gsub(/^\s*\$\s+/, '')
   end
 end
 
