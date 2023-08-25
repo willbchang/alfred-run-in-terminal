@@ -2,7 +2,15 @@ require 'shellwords'
 
 def get_filepath(query)
   # Remove single quote around file path when selecting from Alfred File Browser
-  /^'.*'/.match?(query) ? query[1..-2] : query
+  filepath = /^'.*'/.match?(query) ? query[1..-2] : query
+  space_tilde_slash = /^\s*~\//
+  if filepath.start_with?(space_tilde_slash)
+    username = `whoami`.strip
+    subpath = filepath.sub(space_tilde_slash, '')
+    "/Users/#{username}/#{subpath}"
+  else
+    filepath.gsub(/^\s*/, '')
+  end
 end
 
 def get_filetype(filepath)
@@ -13,17 +21,11 @@ end
 def get_script(query, runtimes)
   filepath = get_filepath(query)
   filetype = get_filetype(filepath)
-  # The \ in filepath has to be escaped third time so that it will actually work.
-  # The first time \\\\\\\\ is in ruby string,
-  # The second time \\\\ is in bash script,
-  # The third time \\ is in apple script,
-  # The fourth time \ is in Terminal app which will escape the special character(s).
-  escaped_filepath = filepath.shellescape.gsub('\\', '\\\\\\\\')
 
   if File.directory?(filepath)
-    "cd #{escaped_filepath}"
+    "cd \\\"#{filepath}\\\""
   elsif File.file?(filepath)
-    "#{runtimes[filetype]} #{escaped_filepath}"
+    "#{runtimes[filetype]} \\\"#{filepath}\\\""
   else
     query.gsub(/^\s*\$\s+/, '')
   end
