@@ -25,22 +25,12 @@ on run argv
 			end if
 		end if
 
-		-- Create temp file for writing the text
-		set tempFilePath to POSIX path of (do shell script "mktemp")
-		set fileHandle to open for access tempFilePath with write permission
-		write (item 1 of argv) to fileHandle
-		close access fileHandle
-
-
-		-- Format the command from the file content
-		-- This way can avoid escaping special characters
-		do shell script "ruby format_command.rb " & quoted form of tempFilePath
-
+		-- Format the command
+		do shell script "ruby format_command.rb " & quoted form of (item 1 of argv)
+		set formatCommand to the result
 
 		-- Select current tab and run shell script
 		set theTab to selected tab in first window
-		set fileContents to read POSIX file tempFilePath
-		do script fileContents in theTab
-		do shell script "rm " & quoted form of tempFilePath
+		do script formatCommand in theTab
 	end tell
 end run

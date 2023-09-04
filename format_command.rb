@@ -25,6 +25,4 @@ def get_script(query)
   end
 end
 
-filepath = ARGV[0]
-file_contents = File.read(filepath)
-File.write(filepath, get_script(file_contents))
+print get_script(ARGV[0])
