@@ -10,57 +10,55 @@ An Alfred Workflow to **execute selected file**, **cd to selected folder**, and 
 1. Download [Run in Termianl.alfredworkflow](https://github.com/willbchang/alfred-run-in-terminal/releases/latest).
 2. Double click `Run in Terminal.alfredworkflow` to install.
 3. Click `Import` Button.
-4. Double click `Hotkey` and set your shortcut.(I'm using <kbd>alt</kbd> + <kbd>t</kbd>).
+4. Double click `Hotkey` and set your shortcut.(I'm using <kbd>hyper</kbd> + <kbd>t</kbd>).
 
-## Feature & Usage
-<kbd>alt</kbd> + <kbd>t</kbd>
-![run in terminal](images/run-in-terminal.gif)
-- Launch Terminal if Terminal isn't active.
-- Bring Terminal to the front window if Terminal is active.
-- Run selected text in Terminal, it avoids `$ ` in the beginning of the first line.
-  ```bash
-  $ echo select me and press hotkey!
-   $ echo Hello $(whoami)
-     $    echo Alfred Loves You!
-  ```
-- `cd` selected file/folder from Finder or Alfred File Browser.
-  1. **Enable Quick Search Mode** in `Features -> File Action`.
-  2. Launch Alfred and press <kbd>spacebar</kbd> or input a single quote.
-  3. Move the highlight block to the destination folder.
-  4. *Notice*: if you enabled `Advanced -> History` and browse file with it, you should use <kbd>tab</kbd> or <kbd>←</kbd> or <kbd>→</kbd> to avoid Alfred's default selection.
-  5. Press <kbd>alt</kbd> + <kbd>t</kbd> or your own shortcut.
-  
-
-### Change Terminal App
-1. Open **Alfred Preferences** -> **Workflows**  -> **Open in Terminal**.
-2. Double click `Run Script`, replace `Terminal` with `YOUR TERMINAL APP`.
-3. Make sure the app name surrounds with **double quote** `""`.
-
-### Add Runtimes
-1. Open **Alfred Preferences** -> **Workflows**  -> **Open in Terminal**.
-2. Right click `Run in Terminal` workflow -> Open in Finder
-3. Open `script.rb`, press <kbd>Command</kbd> + <kbd>F</kbd> to find `runtimes`.
-   ```ruby
-   runtimes = {
-     rb: 'ruby',
-     sh: 'sh',
-     py: 'python',
-     go: 'go',
-     php: 'php',
-     js: 'node',
-     ts: 'deno',
-     rs: 'rust'
-   }
+## Features
+1. **Auto-detect whether current selected text is a filepath and run `cd` if it is.**
+  - `~` will be auto expanded to `/Users/$(whoami)` for checking the filepath.
+  - Spaces before filepath will be removed in order to use `cd`.
+   Input:
+   ```bash
+   ~/Library/Application Support/
    ```
-4. Add new `FILETYPE: RUNTIME`, you can also set other command for specific file type.
+   Output:
+   ```bash
+   cd "/Users/$(whoami)/Library/Application Support/" 
+   ```
+2. **Auto remove the solo `$` in the beginning of lines.**
+  - Some bash code snippets always prefix with `$`, it's annoying when copy and running them.
+  - It won't affect the bash argument, only the `$` with space will be removed, regex: `/^\s*\$\s+/`
 
-## Contribution
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+   Input:
+   ```bash
+   $ temp=$(mktemp)
+     $ echo "$temp"
+   $ rm "$temp"
+   $(whoami)
+   ```
+   Output:
+   ```bash
+   temp=$(mktemp)
+   echo "$temp"
+   rm "$temp"
+   $(whoami) 
+   ```
+3. **Auto-detect whether current Terminal tab is running command, it will open a new tab if current tab has active process.**
+  - Tested with `zsh`, `bash` and `fish`.
+  - Support [Amazon Q(qterm)](https://docs.aws.amazon.com/amazonq/latest/qdeveloper-ug/command-line.html).
+4. **It won't mess up with escaping characters even though this extension uses `ruby`, `applescript` and `shell script` together.**
 
-## Credits
-Icon made by https://www.flaticon.com/authors/kirill-kazachek <br>
-It was built with 💖 in [NeoVim](https://neovim.io/) & [RubyMine](https://www.jetbrains.com/ruby/).
+   Input:
+   ```bash
+   variable="This is a \$10 \"quote\""
+   echo $variable
+   ```
+   Output:
+   ```bash
+   variable="This is a \$10 \"quote\""
+   echo $variable
+   ```
 
-## License
-[AGPL-3.0](LICENSE)
+Only **Terminal.app** is supported, the AppleScript that Terminal.app uses is not compatible with iTerm.app, pull requests are welcome for iTerm.app or other terminal emulators.
 
+## LICENSE
+AGPL-3.0
