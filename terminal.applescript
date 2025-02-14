@@ -11,8 +11,8 @@ on run argv
 			set processList to processes of tabInfo
 			set lastProcess to (last item of processList)
 
-			-- Get the last process from the next tty if using figterm
-			if (lastProcess ends with "(figterm)") then
+			-- Get the last process from the next tty if using qterm(Amazon Q)
+			if (lastProcess ends with "(qterm)") then
 				set ttyDevice to tty of tabInfo
 				do shell script "ruby shell_process.rb " & quoted form of ttyDevice
 				set lastProcess to the result
